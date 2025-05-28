@@ -27,7 +27,7 @@ const OrderPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/products");
+        const res = await fetch("https://bullwork-backend.onrender.com/products");
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
         setProducts(data); // assuming API returns array of products with {id, name}
@@ -56,7 +56,7 @@ const OrderPage = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch("https://bullwork-backend.onrender.com/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

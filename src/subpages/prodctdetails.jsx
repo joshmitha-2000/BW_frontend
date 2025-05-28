@@ -16,14 +16,14 @@ const ProductDetailsPage = () => {
         setLoading(true);
 
         // Fetch product data
-        const productRes = await fetch(`http://localhost:5000/products/${id}`);
+        const productRes = await fetch(`https://bullwork-backend.onrender.com/${id}`);
         if (!productRes.ok) throw new Error("Failed to fetch product");
         const productData = await productRes.json();
         setProduct(productData);
 
         // Fetch feature data for the same product id
         // Assuming feature id matches product id or you can adjust accordingly
-        const featureRes = await fetch(`http://localhost:5000/api/features/${id}`);
+        const featureRes = await fetch(`https://bullwork-backend.onrender.com/${id}`);
         if (!featureRes.ok) throw new Error("Failed to fetch features");
         const featureData = await featureRes.json();
         setFeature(featureData);

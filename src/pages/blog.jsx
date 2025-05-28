@@ -7,7 +7,7 @@ export default function Blog({ limit }) {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/blogs");
+        const res = await fetch("https://bullwork-backend.onrender.com/blogs");
         const data = await res.json();
         setBlogs(limit ? data.slice(0, limit) : data);
       } catch (err) {

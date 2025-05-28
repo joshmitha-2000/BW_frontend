@@ -9,7 +9,7 @@ const Recommendation = ({ currentBlogId }) => {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        const res = await fetch("http://localhost:5000/blogs");
+        const res = await fetch("https://bullwork-backend.onrender.com/blogs");
         if (!res.ok) throw new Error("Failed to fetch blogs");
         const data = await res.json();
 

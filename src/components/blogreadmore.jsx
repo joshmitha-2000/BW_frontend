@@ -10,7 +10,7 @@ export default function BlogDetails() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/blogs/${id}`);
+        const res = await fetch(`https://bullwork-backend.onrender.com/blogs/${id}`);
         const data = await res.json();
         setBlog(data);
       } catch (err) {
