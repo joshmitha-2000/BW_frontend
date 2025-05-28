@@ -1,16 +1,24 @@
-
-import { useState } from "react";
-
-const products = [
-  { id: 1, name: "Product 1", image: "https://www.bullworkmobility.com/home_products/Vamana%20Pro.webp" },
-  { id: 2, name: "Product 2", image: "https://www.bullworkmobility.com/home_products/GLX.webp" },
-  { id: 3, name: "Product 3", image: "https://www.bullworkmobility.com/home_products/GLX.webp" },
-  { id: 4, name: "Product 4", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs0Hp9N_ykjTejmufSnPkFkyuADaGrFkJAFA&s" },
-  { id: 5, name: "Product 5", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0ADdVzzFCmc2dLD7e1UWWNqSfMepibe3O9TaljU0_YOke1lnOc6BL177aqxrrmmNi-TU&usqp=CAU" },
-];
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCarousel() {
+  const [products, setProducts] = useState([]);
   const [centerIndex, setCenterIndex] = useState(2);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch("http://localhost:5000/products");
+        const data = await res.json();
+        setProducts(data);
+        setCenterIndex(2);
+      } catch (err) {
+        console.error("Failed to fetch products:", err);
+      }
+    }
+    fetchProducts();
+  }, []);
 
   const prevSlide = () => {
     setCenterIndex((prev) => (prev - 1 + products.length) % products.length);
@@ -22,16 +30,38 @@ export default function ProductCarousel() {
 
   const getIndex = (offset) => (centerIndex + offset + products.length) % products.length;
 
+  const handleOrderNow = (product) => {
+    navigate("/orders", { state: { productName: product.name } });
+  };
+
+  if (!products.length) return <p className="text-center py-14">Loading products...</p>;
+
+  const productBoxStyle =
+    "border border-gray-300 rounded-lg overflow-hidden flex flex-col";
+
   return (
     <div className="w-full py-14 px-4">
       <div className="w-full flex items-center justify-center gap-6">
-        {/* Left image */}
-        <div className="w-1/5 transition duration-300 h-64">
+
+        {/* Left product */}
+        <div className={`w-1/5 transition duration-300 h-auto ${productBoxStyle}`}>
           <img
-            src={products[getIndex(-1)].image}
-            alt=""
-            className="w-full h-full object-cover rounded-lg opacity-70"
+            src={products[getIndex(-1)].imageUrl}
+            alt={products[getIndex(-1)].name}
+            className="w-full h-52 object-cover"
           />
+          <div className="p-3 flex flex-col items-center">
+            <h3 className="font-semibold text-center">{products[getIndex(-1)].name}</h3>
+            <p className="text-sm text-gray-600 text-center line-clamp-2">
+              {products[getIndex(-1)].description || "No description"}
+            </p>
+            <button
+              onClick={() => handleOrderNow(products[getIndex(-1)])}
+              className="mt-2 px-4 py-1 bg-[#880294] text-white rounded hover:bg-[#a01db1] transition"
+            >
+              Order Now
+            </button>
+          </div>
         </div>
 
         {/* Left Arrow */}
@@ -43,15 +73,26 @@ export default function ProductCarousel() {
           &lt;
         </button>
 
-        {/* Center image */}
-        <div className="w-2/5 transition duration-300" style={{ height: "450px" }}>
-  <img
-    src={products[getIndex(0)].image}
-    alt=""
-    className="w-full h-full object-cover rounded-xl shadow-xl border-4 border-white"
-  />
-</div>
-
+        {/* Center product */}
+        <div className={`w-1/3 transition duration-300 h-[500px] ${productBoxStyle}`}>
+          <img
+            src={products[getIndex(0)].imageUrl}
+            alt={products[getIndex(0)].name}
+            className="w-full h-[300px] object-cover"
+          />
+          <div className="p-4 flex flex-col items-center">
+            <h2 className="text-xl font-bold text-center">{products[getIndex(0)].name}</h2>
+            <p className="text-gray-700 text-center mt-2 line-clamp-3">
+              {products[getIndex(0)].description || "No description available."}
+            </p>
+            <button
+              onClick={() => handleOrderNow(products[getIndex(0)])}
+              className="mt-4 px-6 py-2 bg-[#880294] text-white rounded-lg hover:bg-[#a01db1] transition"
+            >
+              Order Now
+            </button>
+          </div>
+        </div>
 
         {/* Right Arrow */}
         <button
@@ -62,13 +103,25 @@ export default function ProductCarousel() {
           &gt;
         </button>
 
-        {/* Right image */}
-        <div className="w-1/5 transition duration-300 h-64">
+        {/* Right product */}
+        <div className={`w-1/5 transition duration-300 h-auto ${productBoxStyle}`}>
           <img
-            src={products[getIndex(1)].image}
-            alt=""
-            className="w-full h-full object-cover rounded-lg opacity-70"
+            src={products[getIndex(1)].imageUrl}
+            alt={products[getIndex(1)].name}
+            className="w-full h-52 object-cover"
           />
+          <div className="p-3 flex flex-col items-center">
+            <h3 className="font-semibold text-center">{products[getIndex(1)].name}</h3>
+            <p className="text-sm text-gray-600 text-center line-clamp-2">
+              {products[getIndex(1)].description || "No description"}
+            </p>
+            <button
+              onClick={() => handleOrderNow(products[getIndex(1)])}
+              className="mt-2 px-4 py-1 bg-[#880294] text-white rounded hover:bg-[#a01db1] transition"
+            >
+              Order Now
+            </button>
+          </div>
         </div>
       </div>
 
@@ -78,7 +131,7 @@ export default function ProductCarousel() {
           <div
             key={idx}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              idx === centerIndex ? 'bg-[#880294]' : 'bg-gray-300'
+              idx === centerIndex ? "bg-[#880294]" : "bg-gray-300"
             }`}
           />
         ))}

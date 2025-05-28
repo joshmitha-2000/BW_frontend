@@ -5,7 +5,8 @@ import ContactPage from '../components/contact';
 
 export default function Careers() {
   return (
-    <div className="w-full max-w-[100vw] overflow-x-hidden mx-auto px-4 py-12">
+    <div className="w-screen min-h-screen overflow-x-hidden mt-16">
+
 
       {/* Life @ Bullwork Section */}
       <section>

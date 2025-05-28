@@ -1,5 +1,6 @@
 
 import React from 'react';
+import {Link} from "react-router-dom";
 import SimpleToggleSlider from '../components/slider1';
 import ImageToggleSlider2 from '../components/slider2';
 import ContactPage from '../components/contact';
@@ -26,12 +27,14 @@ export default function Technology() {
   <li><a href="#analytics" className="hover:text-purple-500 cursor-pointer">4. Analytics</a></li>
 </ul>
 
+  <Link to='/orders'>
   <button className="bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] 
                      text-white px-8 py-3 rounded-lg
                      shadow-lg hover:brightness-110 transition duration-300 
                      text-sm font-normal tracking-widest">
     ORDER
   </button>
+  </Link>
 </nav>
 <section id="automation">
 <h1 className="text-3xl sm:text-3xl mt-7 font-semibold max-w-7xl mx-auto leading-relaxed uppercase tracking-widest text-center">

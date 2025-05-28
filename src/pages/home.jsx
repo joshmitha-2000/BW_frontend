@@ -23,6 +23,7 @@ export default function Home() {
 
         {/* Overlay content (Button + Text) */}
         <div className="absolute top-[87%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full px-6 text-center">
+          <Link to='/orders'>
           <button
             className="bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] 
                        text-white px-8 py-3 rounded-lg
@@ -30,6 +31,7 @@ export default function Home() {
           >
             ORDER NOW
           </button>
+          </Link>
           <p className="text-black text-3xl sm:text-2xl font-normal max-w-7xl mx-auto leading-relaxed uppercase tracking-widest">
             We provide full stack electric autonomous solutions for a Cleaner, Greener Tomorrow.
           </p>
@@ -62,7 +64,7 @@ export default function Home() {
 </button>
 
 
-        <h1 className="font-semibold tracking-wideest text-4xl text-center mt-24">
+        <h1 className="font-semibold tracking-wideest text-4xl text-center mt-14">
           PRODUCTS
         </h1>
         <p className="text-center mb-4 text-gray-700 mt-1.5">
@@ -206,6 +208,7 @@ export default function Home() {
 </section>
 <section className="bg-gray-200 text-center p-10">
     <h1 className=" text-black px-8 py-3 rounded-lg text-center mb-6 text-2xl font-normal tracking-widest">JOIN THE BULLWORK FAMILY </h1>
+    <Link to='/orders'>
     <button
             className="bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] 
                        text-white px-8 py-3 rounded-lg
@@ -213,12 +216,15 @@ export default function Home() {
           >
             ORDER
           </button>
+    </Link>
+          <Link to='/demo'>
           <button
   className="border-black px-8 py-3 rounded-lg
              shadow-lg hover:brightness-110 transition duration-300 mb-6 text-sm font-normal tracking-widest"
 >
   Book Demo
 </button>
+          </Link>
 
 </section>
 <section>

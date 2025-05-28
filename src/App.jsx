@@ -8,6 +8,10 @@ import Technology from './pages/Technology';
 import Aboutus from './pages/Aboutus';
 import Careers from './pages/Careers';
 import OrderPage from './pages/Orders';
+import BlogDetails from './components/blogreadmore';
+import SuccessPage from './pages/success';
+import ProductDetailsPage from './subpages/prodctdetails';
+import Demo from './pages/demo';
 import './App.css';
 
 function App() {
@@ -22,6 +26,10 @@ function App() {
         <Route path='Aboutus' element={<Aboutus/>}/>
         <Route path='/Careers' element={<Careers/>}/>
         <Route path='/orders' element={<OrderPage/>}/>
+        <Route path="/blogs/:id" element={<BlogDetails />} />
+        <Route path="/success" element={<SuccessPage />} />
+        <Route path="/products/:id" element={<ProductDetailsPage />} />
+        <Route path="/demo" element={<Demo />} />
       </Routes>
     </>
   );
