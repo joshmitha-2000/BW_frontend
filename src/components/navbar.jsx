@@ -6,7 +6,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -16,7 +15,6 @@ const Navbar = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  // Close dropdown when clicking outside (desktop)
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -76,7 +74,6 @@ const Navbar = () => {
                   {link.name}
                 </button>
 
-                {/* FULL-WIDTH DROPDOWN */}
                 {dropdownOpen && (
                   <div className="fixed left-0 top-14 w-screen bg-white text-black z-40 shadow-lg border-t border-gray-200">
                     <div className="max-w-screen-2xl mx-auto px-6 py-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -93,7 +90,7 @@ const Navbar = () => {
                           <Link
                             to={`/products/${product.id}`}
                             className="text-purple-600 text-xs mt-1 inline-block hover:underline"
-                            onClick={() => setDropdownOpen(false)} // close on click
+                            onClick={() => setDropdownOpen(false)}
                           >
                             EXPLORE
                           </Link>
@@ -108,14 +105,13 @@ const Navbar = () => {
                 key={link.name}
                 to={link.path}
                 className="text-white hover:text-fuchsia-700 transition tracking-wide"
-                onClick={() => setDropdownOpen(false)} // close dropdown on other nav click
+                onClick={() => setDropdownOpen(false)}
               >
                 {link.name}
               </Link>
             )
           )}
 
-          {/* Order Button */}
           <Link to="/orders" onClick={() => setDropdownOpen(false)}>
             <button className="bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] text-white px-6 py-2 rounded-lg shadow-lg hover:brightness-110 transition duration-300 text-sm font-normal tracking-wide">
               ORDER
@@ -138,52 +134,16 @@ const Navbar = () => {
       {/* Mobile Dropdown */}
       {isOpen && (
         <div className="md:hidden bg-black text-white px-4 pb-4 space-y-3 transition-all duration-300 ease-in-out">
-          {links.map((link) =>
-            link.name === "PRODUCTS" ? (
-              <div key={link.name}>
-                <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="w-full text-left py-2 border-b border-gray-800 tracking-wide flex justify-between items-center"
-                >
-                  {link.name}
-                  <span
-                    className={`transform transition-transform ${
-                      dropdownOpen ? "rotate-180" : "rotate-0"
-                    }`}
-                  >
-                    ▼
-                  </span>
-                </button>
-
-                {dropdownOpen && (
-                  <div className="bg-gray-900 mt-2 rounded-md p-2 space-y-2 max-h-64 overflow-y-auto">
-                    {products.map((product) => (
-                      <Link
-                        key={product.id}
-                        to={`/products/${product.id}`}
-                        onClick={() => {
-                          setIsOpen(false);
-                          setDropdownOpen(false);
-                        }}
-                        className="block px-2 py-1 rounded hover:bg-fuchsia-700 transition"
-                      >
-                        {product.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className="block py-2 border-b border-gray-800 hover:text-yellow-400 tracking-wide"
-              >
-                {link.name}
-              </Link>
-            )
-          )}
+          {links.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              onClick={() => setIsOpen(false)}
+              className="block py-2 border-b border-gray-800 hover:text-yellow-400 tracking-wide"
+            >
+              {link.name}
+            </Link>
+          ))}
 
           <Link to="/orders">
             <button className="w-full mt-4 bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] text-white px-6 py-3 rounded-lg shadow-lg hover:brightness-110 transition duration-300 text-sm font-normal tracking-wide">

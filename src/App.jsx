@@ -11,6 +11,7 @@ import OrderPage from './pages/Orders';
 import BlogDetails from './components/blogreadmore';
 import SuccessPage from './pages/success';
 import ProductDetailsPage from './subpages/prodctdetails';
+import Products from './pages/products';
 import Demo from './pages/demo';
 import './App.css';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/products/:id" element={<ProductDetailsPage />} />
         <Route path="/demo" element={<Demo />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
     </>
   );

@@ -31,11 +31,11 @@ export default function ContactPage() {
         <div>
           <h2 className="text-base sm:text-lg font-semibold mb-4">Connect with us on</h2>
           <div className="flex gap-4 mb-6 text-xl sm:text-2xl flex-wrap">
-            <FaFacebookF className="hover:text-purple-600 cursor-pointer" />
-            <FaYoutube className="hover:text-purple-600 cursor-pointer" />
-            <FaInstagram className="hover:text-purple-600 cursor-pointer" />
-            <FaXTwitter className="hover:text-purple-600 cursor-pointer" />
-            <FaLinkedinIn className="hover:text-purple-600 cursor-pointer" />
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookF className="hover:text-purple-600 cursor-pointer" /></a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><FaYoutube className="hover:text-purple-600 cursor-pointer" /></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram className="hover:text-purple-600 cursor-pointer" /></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaXTwitter className="hover:text-purple-600 cursor-pointer" /></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><FaLinkedinIn className="hover:text-purple-600 cursor-pointer" /></a>
           </div>
 
           <h2 className="text-base sm:text-lg font-semibold mb-2">
@@ -74,7 +74,7 @@ export default function ContactPage() {
               info@bullworkmobility.com
             </a>
           </p>
-          <p className="mb-4 text-sm sm:text-base">Call us at: 8123596969, 8123296969</p>
+          <p className="mb-4 text-sm sm:text-base">Call us at: <a href="tel:+918123596969" className="hover:text-purple-400">8123596969</a>, <a href="tel:+918123296969" className="hover:text-purple-400">8123296969</a></p>
 
           <h2 className="text-base sm:text-lg font-bold flex items-center gap-2">
             <FaLocationArrow /> Visit Us:
@@ -91,25 +91,25 @@ export default function ContactPage() {
           <div>
             <h3 className="font-semibold mb-2 text-sm sm:text-base">COMPANY</h3>
             <ul className="space-y-1 text-sm">
-              <li className="hover:text-purple-400 cursor-pointer">Blogs</li>
-              <li className="hover:text-purple-400 cursor-pointer">About Us</li>
-              <li className="hover:text-purple-400 cursor-pointer">Careers</li>
+              <li><a href="/blogs" className="hover:text-purple-400">Blogs</a></li>
+              <li><a href="/Aboutus" className="hover:text-purple-400">About Us</a></li>
+              <li><a href="/Careers" className="hover:text-purple-400">Careers</a></li>
             </ul>
           </div>
           <div>
             <h3 className="font-semibold mb-2 text-sm sm:text-base">PRODUCTS</h3>
             <ul className="space-y-1 text-sm">
-              <li className="hover:text-purple-400 cursor-pointer">Electric Tractor</li>
-              <li className="hover:text-purple-400 cursor-pointer">GLX E-Loader</li>
-              <li className="hover:text-purple-400 cursor-pointer">Vamana</li>
-              <li className="hover:text-purple-400 cursor-pointer">Warrior</li>
-              <li className="hover:text-purple-400 cursor-pointer">0X-1</li>
+              <li><a href="/products/3" className="hover:text-purple-400">Beast</a></li>
+              <li><a href="/products/2" className="hover:text-purple-400">GLX E-Loader</a></li>
+              <li><a href="/products/4" className="hover:text-purple-400">Vamana</a></li>
+              <li><a href="/products/1" className="hover:text-purple-400">Warrior</a></li>
+              <li><a href="/products/5" className="hover:text-purple-400">0X-1</a></li>
             </ul>
           </div>
           <div>
             <h3 className="font-semibold mb-2 text-sm sm:text-base">TECHNOLOGY</h3>
             <ul className="space-y-1 text-sm">
-              <li className="hover:text-purple-400 cursor-pointer">Autonomy</li>
+              <li><a href="/Technology" className="hover:text-purple-400">Autonomy</a></li>
             </ul>
           </div>
         </div>

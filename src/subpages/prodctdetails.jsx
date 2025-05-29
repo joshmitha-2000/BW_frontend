@@ -16,18 +16,15 @@ const ProductDetailsPage = () => {
       try {
         setLoading(true);
 
-        // Fetch product data
         const productRes = await fetch(`https://bullwork-backend.onrender.com/products/${id}`);
         if (!productRes.ok) throw new Error("Failed to fetch product");
         const productData = await productRes.json();
         setProduct(productData);
 
-        // Fetch feature data for the same product id
         const featureRes = await fetch(`https://bullwork-backend.onrender.com/api/features/${id}`);
         if (!featureRes.ok) throw new Error("Failed to fetch features");
         const featureData = await featureRes.json();
         setFeature(featureData);
-
       } catch (err) {
         setError(err.message);
       } finally {
@@ -48,7 +45,7 @@ const ProductDetailsPage = () => {
       <img
         src={product.image2 || "/placeholder.png"}
         alt={product.name}
-        className="w-screen min-h-screen object-contain"
+        className="w-full max-h-[100vh] h-full object-contain"
       />
 
       <div className="bg-gray-50">
@@ -105,35 +102,30 @@ const ProductDetailsPage = () => {
 
         {/* Features Section */}
         <section
-          id="automation"
-          className="relative w-full h-[600px] sm:h-[500px] mb-10 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${feature?.imageUrl || "/fallback-feature-image.webp"})`,
-          }}
+          id="features"
+          className="w-full mb-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 px-4 sm:px-0"
         >
-          {/* Optional: Dark overlay for readability */}
-          <div className="absolute inset-0 z-0" />
+          {/* Feature Image */}
+          <div className="w-full sm:w-1/2 h-[300px] sm:h-[500px] bg-cover bg-center rounded-lg shadow-md"
+            style={{ backgroundImage: `url(${feature?.imageUrl || "/fallback-feature-image.webp"})` }}
+          ></div>
 
-          {/* Content on top of the image */}
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-start pt-20 sm:pt-10 px-4 sm:px-0">
-            <h2 className="text-2xl sm:text-4xl font-bold text-black drop-shadow-lg pb-3 mb-5 text-center max-w-[90vw] sm:max-w-none">
+          {/* Feature Texts */}
+          <div className="w-full sm:w-1/2 flex flex-col gap-6 sm:gap-8">
+            <h2 className="text-2xl sm:text-4xl font-bold text-black drop-shadow-lg text-center sm:text-left">
               {feature?.title}
             </h2>
 
-            {/* Feature texts */}
-            <div className="relative w-full max-w-5xl h-[220px] sm:h-[300px] mt-4 sm:mt-6">
-              {/* Feature 1 */}
-              <div className="absolute top-2 left-4 sm:left-20 text-white bg-fuchsia-500 bg-opacity-70 p-3 sm:p-4 rounded-lg  max-w-[80vw] sm:max-w-xs">
+            <div className="flex flex-col gap-4">
+              <div className="bg-fuchsia-500 bg-opacity-70 text-white p-4 rounded-lg shadow-md max-w-full">
                 <p>{feature?.feature1}</p>
               </div>
 
-              {/* Feature 2 */}
-              <div className="absolute top-10 right-4 sm:right-0 text-white bg-purple-700 bg-opacity-70 p-3 sm:p-4 rounded-lg  max-w-[80vw] sm:max-w-xs">
+              <div className="bg-purple-700 bg-opacity-70 text-white p-4 rounded-lg shadow-md max-w-full">
                 <p>{feature?.feature2}</p>
               </div>
 
-              {/* Feature 3 */}
-              <div className="absolute bottom-0 left-10 sm:left-40 transform -translate-x-1/2 text-white bg-indigo-600 bg-opacity-70 p-3 sm:p-4 rounded-lg  max-w-[80vw] sm:max-w-xs">
+              <div className="bg-indigo-600 bg-opacity-70 text-white p-4 rounded-lg shadow-md max-w-full">
                 <p>{feature?.feature3}</p>
               </div>
             </div>
@@ -150,8 +142,9 @@ const ProductDetailsPage = () => {
           className="w-full mb-10 h-[250px] sm:h-[400px] object-contain rounded-l-full bg-transparent"
         />
       </div>
-      <Jointhebullwork/>
-      <ContactPage/>
+
+      <Jointhebullwork />
+      <ContactPage />
     </div>
   );
 };
