@@ -65,7 +65,7 @@ export default function FAQSection({ limit }) {
       answer: "Yes, we can.",
     },
   ];
-  
+
   const [openIndex, setOpenIndex] = useState(null);
   const visibleFaqs = limit ? faqs.slice(0, limit) : faqs;
 
@@ -74,26 +74,34 @@ export default function FAQSection({ limit }) {
   };
 
   return (
-    <section className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl sm:text-3xl mt-7 font-semibold max-w-7xl mx-auto leading-relaxed uppercase tracking-widest text-center mb-6">
-    FREQUENTLY ASKED QUESTIONS
-  </h1>
+    <section className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-12">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center uppercase tracking-widest mb-10 text-gray-800">
+        Frequently Asked Questions
+      </h1>
 
-      {visibleFaqs.map((faq, index) => (
-        <div
-          key={index}
-          className="mb-6 border-b-2 border-gray-400 pb-10 cursor-pointer"
-          onClick={() => toggleFAQ(index)}
-        >
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium">{faq.question}</h3>
-            {openIndex === index ? <ChevronUp /> : <ChevronDown />}
+      <div className="space-y-6">
+        {visibleFaqs.map((faq, index) => (
+          <div
+            key={index}
+            className="border-b border-gray-300 pb-4"
+            onClick={() => toggleFAQ(index)}
+          >
+            <div className="flex justify-between items-center cursor-pointer gap-3">
+              <h3 className="text-base sm:text-lg md:text-xl font-medium text-gray-700">
+                {faq.question}
+              </h3>
+              <span className="text-gray-500">
+                {openIndex === index ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </span>
+            </div>
+            {openIndex === index && (
+              <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
+                {faq.answer}
+              </p>
+            )}
           </div>
-          {openIndex === index && (
-            <p className="mt-2 text-violet-900 font-medium">{faq.answer}</p>
-          )}
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   );
 }

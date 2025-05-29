@@ -34,43 +34,50 @@ const Recommendation = ({ currentBlogId }) => {
     fetchRecommendations();
   }, [currentBlogId]);
 
-  if (loading) return <p className="text-center my-10">Loading recommendations...</p>;
-  if (error) return <p className="text-center my-10 text-red-600">Error: {error}</p>;
+  if (loading)
+    return <p className="text-center my-10">Loading recommendations...</p>;
+  if (error)
+    return (
+      <p className="text-center my-10 text-red-600">Error: {error}</p>
+    );
   if (recommendations.length === 0)
     return <p className="text-center my-10">No recommendations available.</p>;
 
   return (
-    <>
-      <div className="max-w-6xl mx-auto px-4 py-10">
-        <h2 className="text-3xl font-semibold mb-8 text-center">Recommended Blogs</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 ">
-          {recommendations.map(({ _id, id, title,imageUrl }) => (
-            <div
-              key={_id || id}
-              className="flex flex-col rounded-xl shadow-lg overflow-hidden bg-white max-w-xs mx-auto"
-            >
-              {imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt={title}
-                  className="w-full h-44 object-cover"
-                  loading="lazy"
-                />
-              )}
-              <div className="p-4 flex flex-col flex-grow">
-                <h3 className="text-lg font-semibold mb-2">{title}</h3>
-                <Link
-                  to={`/blogs/${_id || id}`}
-                  className="mt-auto text-center text-violet-900 border border-violet-900 px-4 py-2 rounded-3xl hover:bg-violet-900 hover:text-white transition self-start text-sm"
-                >
-                  Read More
-                </Link>
-              </div>
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <h2 className="text-3xl font-semibold mb-8 text-center">
+        Recommended Blogs
+      </h2>
+
+      {/* Flex container with gap, centered, responsive */}
+      <div className="flex flex-col sm:flex-row justify-center gap-8">
+        {recommendations.slice(0, 2).map(({ _id, id, title, imageUrl }) => (
+          <div
+            key={_id || id}
+            className="flex flex-col rounded-xl shadow-lg overflow-hidden bg-white max-w-xs mx-auto sm:mx-0"
+            style={{ width: '300px' }}
+          >
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={title}
+                className="w-full h-44 object-cover"
+                loading="lazy"
+              />
+            )}
+            <div className="p-4 flex flex-col flex-grow">
+              <h3 className="text-lg font-semibold mb-2">{title}</h3>
+              <Link
+                to={`/blogs/${_id || id}`}
+                className="mt-auto text-center text-violet-900 border border-violet-900 px-4 py-2 rounded-3xl hover:bg-violet-900 hover:text-white transition self-start text-sm"
+              >
+                Read More
+              </Link>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

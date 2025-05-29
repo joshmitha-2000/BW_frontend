@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import ContactPage from "../components/contact";
 import { useNavigate } from "react-router-dom";
+import Jointhebullwork from "../components/jointhebullwork";
+import ContactPage from "../components/contact";
 
 const OrderPage = () => {
   const [type, setType] = useState("INDIVIDUAL");
   const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]); // for fetched products
+  const [products, setProducts] = useState([]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,23 +20,21 @@ const OrderPage = () => {
     pincode: "",
     aadharNumber: "",
     panNumber: "",
-    productId: "", // will store product ID
+    productId: "",
     message: "",
   });
 
-  // Fetch products from backend API on component mount
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await fetch("https://bullwork-backend.onrender.com/products");
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
-        setProducts(data); // assuming API returns array of products with {id, name}
+        setProducts(data);
       } catch (err) {
         alert("Error loading products: " + err.message);
       }
     };
-
     fetchProducts();
   }, []);
 
@@ -93,246 +92,150 @@ const OrderPage = () => {
   };
 
   return (
-    <>
-      <div className="min-h-screen bg-white">
-        <div className="bg-[#4b0052] h-[50vh] w-full flex flex-col justify-center items-center p-18 text-white text-center">
-          <h1 className="text-center text-4xl font-medium uppercase tracking-widest">
-            ORDER FORM
-          </h1>
-          <p className="mt-2 text-sm md:text-base mb-18">
-            Fill in the below details to order products
-          </p>
+    <div className="bg-white min-h-screen">
+      {/* Header */}
+      <div className="bg-[#4b0052] h-[40vh] flex flex-col justify-center items-center text-white text-center p-6">
+        <h1 className="text-3xl md:text-5xl font-bold uppercase tracking-widest">Order Form</h1>
+        <p className="mt-4 pb-10 text-sm md:text-base">Fill in the below details to order products</p>
+      </div>
+
+      {/* Form Card */}
+      <div className="max-w-5xl mx-auto -mt-24 p-6 md:p-10 bg-white rounded-xl shadow-2xl z-10 relative">
+        {/* Order Type Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {["INDIVIDUAL", "COMPANY"].map((val) => (
+            <button
+              key={val}
+              onClick={() => setType(val)}
+              className={`px-6 py-2 rounded-md font-semibold border transition ${
+                type === val
+                  ? "bg-[#4b0052] text-white border-white"
+                  : "bg-white text-[#4b0052] border-[#4b0052]"
+              }`}
+            >
+              {val.charAt(0) + val.slice(1).toLowerCase()}
+            </button>
+          ))}
         </div>
 
-        <div className="max-w-5xl mx-auto -mt-32 bg-white p-8 rounded-xl shadow-xl relative z-10">
-          <div className="flex justify-center gap-4 mb-8">
-            <button
-              type="button"
-              onClick={() => setType("INDIVIDUAL")}
-              className={`px-6 py-2 rounded-md font-semibold transition border ${
-                type === "INDIVIDUAL"
-                  ? "bg-[#4b0052] text-white border-white"
-                  : "bg-white text-[#4b0052] border-[#4b0052]"
-              }`}
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            { label: "Name*", name: "name", type: "text", required: true },
+            { label: "Phone Number*", name: "phoneNumber", type: "tel", required: true },
+            { label: "Email Address", name: "email", type: "email" },
+            { label: "Address", name: "address", type: "text" },
+            { label: "City", name: "city", type: "text" },
+            { label: "Pincode", name: "pincode", type: "text" },
+            { label: "Aadhar Number", name: "aadharNumber", type: "text" },
+            { label: "PAN Number", name: "panNumber", type: "text" },
+          ].map(({ label, name, type, required }) => (
+            <div key={name}>
+              <label className="block mb-1 font-semibold">{label}</label>
+              <input
+                type={type}
+                name={name}
+                value={formData[name]}
+                onChange={handleChange}
+                required={required}
+                className="w-full border border-purple-800 rounded px-3 py-2"
+                placeholder={`Enter ${label.replace("*", "")}`}
+              />
+            </div>
+          ))}
+
+          {/* Country Dropdown */}
+          <div>
+            <label className="block mb-1 font-semibold">Country</label>
+            <select
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              className="w-full border border-purple-800 rounded px-3 py-2"
             >
-              Individual
-            </button>
-            <button
-              type="button"
-              onClick={() => setType("COMPANY")}
-              className={`px-6 py-2 rounded-md font-semibold transition border ${
-                type === "COMPANY"
-                  ? "bg-[#4b0052] text-white border-white"
-                  : "bg-white text-[#4b0052] border-[#4b0052]"
-              }`}
+              <option value="">Select Country</option>
+              <option value="India">India</option>
+              <option value="USA">USA</option>
+            </select>
+          </div>
+
+          {/* State Dropdown */}
+          <div>
+            <label className="block mb-1 font-semibold">State</label>
+            <select
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              className="w-full border border-purple-800 rounded px-3 py-2"
             >
-              Company
+              <option value="">Select State</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Kerala">Kerala</option>
+            </select>
+          </div>
+
+          {/* Product Dropdown */}
+          <div className="md:col-span-2">
+            <label className="block mb-1 font-semibold">Select Product*</label>
+            <select
+              name="productId"
+              value={formData.productId}
+              onChange={handleChange}
+              required
+              className="w-full border border-purple-800 rounded px-3 py-2"
+            >
+              <option value="">Select a Product</option>
+              {products.map((product) => (
+                <option key={product.id} value={product.id}>
+                  {product.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Message */}
+          <div className="md:col-span-2">
+            <label className="block mb-1 font-semibold">Message</label>
+            <textarea
+              name="message"
+              rows="4"
+              placeholder="Enter your message..."
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full border border-purple-800 rounded px-3 py-2"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="md:col-span-2 flex justify-center mt-4">
+            <button
+              type="submit"
+              className="bg-purple-800 text-white px-8 py-3 rounded-lg shadow-lg hover:bg-purple-700 transition"
+            >
+              BOOK PRODUCT
             </button>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            <div>
-              <label className="block mb-1 font-semibold">Name*</label>
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="Enter Name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">Phone Number*</label>
-              <input
-                type="tel"
-                name="phoneNumber"
-                required
-                placeholder="Enter Phone Number"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter Email Address"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">Address</label>
-              <input
-                type="text"
-                name="address"
-                placeholder="Enter Address"
-                value={formData.address}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">Country</label>
-              <select
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
+          {/* Book Demo Link */}
+          <div className="md:col-span-2 text-center mt-4">
+            <p className="text-sm">
+              Looking for a Product Demo?{" "}
+              <a
+                href="/demo"
+                className="text-purple-800 font-semibold underline hover:text-purple-600 transition"
               >
-                <option value="">Select Country</option>
-                <option value="India">India</option>
-                <option value="USA">USA</option>
-              </select>
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">State</label>
-              <select
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              >
-                <option value="">Select State</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Kerala">Kerala</option>
-              </select>
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">City</label>
-              <input
-                type="text"
-                name="city"
-                placeholder="Enter City"
-                value={formData.city}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">Pincode</label>
-              <input
-                type="text"
-                name="pincode"
-                placeholder="Enter Pincode"
-                value={formData.pincode}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">Aadhar Number</label>
-              <input
-                type="text"
-                name="aadharNumber"
-                placeholder="Enter Aadhar Number"
-                value={formData.aadharNumber}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">PAN Number</label>
-              <input
-                type="text"
-                name="panNumber"
-                placeholder="Enter PAN Number"
-                value={formData.panNumber}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
+                Book a Demo
+              </a>
+            </p>
+          </div>
+        </form>
+      </div>
 
-            <div className="md:col-span-2">
-              <label className="block mb-1 font-semibold">Select Product</label>
-              <select
-                name="productId"
-                value={formData.productId}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-                required
-              >
-                <option value="">Select a Product</option>
-                {products.map((product) => (
-                  <option key={product.id} value={product.id}>
-                    {product.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="md:col-span-2">
-              <label className="block mb-1 font-semibold">Message</label>
-              <textarea
-                name="message"
-                rows="4"
-                placeholder="Enter your message..."
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full border border-purple-800 rounded px-3 py-2"
-              />
-            </div>
-
- <div className="md:col-span-2 flex justify-center mt-4">
-  <button type="submit"
-            className="border-b-black border-2 px-8 py-3 rounded-lg
-                       shadow-lg hover:brightness-110 transition duration-300 mb-6  font-normal tracking-widest mr-6"
-          >
-          
-           BOOK PRODUCT
-          </button>
-  </div>
-  <div className="md:col-span-2 flex justify-center mt-4">
-  <p className="text-center text-sm md:text-base">
-    Looking for a Product Demo?{' '}
-    <a
-      href="/demo"
-      className="text-purple-800 font-semibold underline hover:text-purple-600 transition"
-    >
-      Book a Demo
-    </a>
-  </p>
-</div>
-      </form>
+      {/* Footer CTA */}
+     <Jointhebullwork/>
+     <ContactPage/>
     </div>
-    <section className="bg-gray-200 text-center p-10 mt-14 rounded-lg shadow-sm">
-        <h1 className="text-black px-8 py-3 rounded-lg text-center mb-6 text-2xl font-semibold tracking-widest">
-          JOIN THE BULLWORK FAMILY
-        </h1>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button
-            onClick={() => alert("Redirecting to order page...")}
-            className="bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] 
-                       text-white px-8 py-3 rounded-lg shadow-lg 
-                       hover:brightness-110 transition duration-300 text-sm font-medium tracking-widest"
-          >
-            ORDER
-          </button>
-          <button
-            onClick={() => navigate('/demo')}
-            className="border border-black px-8 py-3 rounded-lg shadow-lg 
-                       hover:bg-black hover:text-white transition duration-300 
-                       text-sm font-medium tracking-widest"
-          >
-            Book Demo
-          </button>
-        </div>
-      </section>
-
-
-<ContactPage/>
-  </div>
-
-</>
-);
+  );
 };
 
 export default OrderPage;

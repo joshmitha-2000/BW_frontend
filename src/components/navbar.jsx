@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
@@ -7,12 +7,33 @@ const Navbar = () => {
   const [products, setProducts] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const dropdownRef = useRef(null);
+
   useEffect(() => {
     fetch("https://bullwork-backend.onrender.com/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error(err));
   }, []);
+
+  // Close dropdown when clicking outside (desktop)
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   const links = [
     { name: "HOME", path: "/" },
@@ -23,68 +44,71 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-black text-white shadow-md top-0 left-0 right-0 z-50 px-1 fixed">
+    <nav className="bg-black text-white shadow-md fixed top-0 left-0 right-0 z-50 px-2 sm:px-6">
       <div className="flex items-center justify-between h-14 max-w-7xl mx-auto relative">
         {/* Logo + Brand */}
         <div className="flex items-center space-x-3">
           <img
             src="https://www.bullworkmobility.com/images/logo.webp"
             alt="Logo"
-            className="h-8 ml-5 w-auto"
+            className="h-8 w-auto ml-2 sm:ml-5"
           />
-          <Link to="/" className="text-2xl ml-2 font-normal tracking-wide">
+          <Link
+            to="/"
+            className="text-2xl font-normal tracking-wide ml-1 sm:ml-2"
+          >
             BULLWORK MOBILITY
           </Link>
         </div>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center space-x-10 text-sm font-normal text-white relative">
+        <div
+          ref={dropdownRef}
+          className="hidden md:flex items-center space-x-10 text-sm font-normal text-white relative"
+        >
           {links.map((link) =>
             link.name === "PRODUCTS" ? (
-              <div
-                key={link.name}
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
-                className="relative cursor-pointer"
-              >
-                <Link
-                  to={link.path}
+              <div key={link.name} className="relative cursor-pointer">
+                <button
+                  onClick={() => setDropdownOpen((prev) => !prev)}
                   className="text-white hover:text-fuchsia-700 transition tracking-wide"
                 >
                   {link.name}
-                </Link>
+                </button>
 
                 {/* FULL-WIDTH DROPDOWN */}
                 {dropdownOpen && (
-  <div className="fixed left-0 top-14 w-screen bg-white text-black z-40 shadow-lg border-t border-gray-200">
-    <div className="max-w-screen-2xl mx-auto px-6 py-4 grid grid-cols-5 gap-6">
-      {products.map((product) => (
-        <div key={product.id} className="text-center">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="w-60 h-50 object-cover rounded mb-2 mx-auto"
-          />
-          <p className="font-medium text-black text-2xl tracking-widest">{product.name}</p>
-          <Link
-            to={`/products/${product.id}`}
-            className="text-purple-600 text-xs mt-1 inline-block hover:underline"
-          >
-            EXPLORE
-          </Link>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
-
-                  
+                  <div className="fixed left-0 top-14 w-screen bg-white text-black z-40 shadow-lg border-t border-gray-200">
+                    <div className="max-w-screen-2xl mx-auto px-6 py-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                      {products.map((product) => (
+                        <div key={product.id} className="text-center">
+                          <img
+                            src={product.imageUrl}
+                            alt={product.name}
+                            className="w-full max-w-xs h-48 object-cover rounded mb-2 mx-auto"
+                          />
+                          <p className="font-medium text-black text-lg tracking-widest">
+                            {product.name}
+                          </p>
+                          <Link
+                            to={`/products/${product.id}`}
+                            className="text-purple-600 text-xs mt-1 inline-block hover:underline"
+                            onClick={() => setDropdownOpen(false)} // close on click
+                          >
+                            EXPLORE
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <Link
                 key={link.name}
                 to={link.path}
                 className="text-white hover:text-fuchsia-700 transition tracking-wide"
+                onClick={() => setDropdownOpen(false)} // close dropdown on other nav click
               >
                 {link.name}
               </Link>
@@ -92,7 +116,7 @@ const Navbar = () => {
           )}
 
           {/* Order Button */}
-          <Link to="/orders">
+          <Link to="/orders" onClick={() => setDropdownOpen(false)}>
             <button className="bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] text-white px-6 py-2 rounded-lg shadow-lg hover:brightness-110 transition duration-300 text-sm font-normal tracking-wide">
               ORDER
             </button>
@@ -113,17 +137,53 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-black text-white px-4 pb-4">
-          {links.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className="block py-2 border-b border-gray-800 hover:text-yellow-400 tracking-wide"
-            >
-              {link.name}
-            </Link>
-          ))}
+        <div className="md:hidden bg-black text-white px-4 pb-4 space-y-3 transition-all duration-300 ease-in-out">
+          {links.map((link) =>
+            link.name === "PRODUCTS" ? (
+              <div key={link.name}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="w-full text-left py-2 border-b border-gray-800 tracking-wide flex justify-between items-center"
+                >
+                  {link.name}
+                  <span
+                    className={`transform transition-transform ${
+                      dropdownOpen ? "rotate-180" : "rotate-0"
+                    }`}
+                  >
+                    ▼
+                  </span>
+                </button>
+
+                {dropdownOpen && (
+                  <div className="bg-gray-900 mt-2 rounded-md p-2 space-y-2 max-h-64 overflow-y-auto">
+                    {products.map((product) => (
+                      <Link
+                        key={product.id}
+                        to={`/products/${product.id}`}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setDropdownOpen(false);
+                        }}
+                        className="block px-2 py-1 rounded hover:bg-fuchsia-700 transition"
+                      >
+                        {product.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                key={link.name}
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className="block py-2 border-b border-gray-800 hover:text-yellow-400 tracking-wide"
+              >
+                {link.name}
+              </Link>
+            )
+          )}
 
           <Link to="/orders">
             <button className="w-full mt-4 bg-gradient-to-r from-[#c504d6] via-[#880294] to-[#510059] text-white px-6 py-3 rounded-lg shadow-lg hover:brightness-110 transition duration-300 text-sm font-normal tracking-wide">
