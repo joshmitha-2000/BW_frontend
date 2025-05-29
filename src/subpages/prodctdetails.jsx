@@ -123,17 +123,17 @@ const ProductDetailsPage = () => {
             {/* Feature texts */}
             <div className="relative w-full max-w-5xl h-[220px] sm:h-[300px] mt-4 sm:mt-6">
               {/* Feature 1 */}
-              <div className="absolute top-2 left-4 sm:left-20 text-white bg-fuchsia-500 bg-opacity-70 p-3 sm:p-4 rounded-lg max-w-xs max-w-[80vw] sm:max-w-xs">
+              <div className="absolute top-2 left-4 sm:left-20 text-white bg-fuchsia-500 bg-opacity-70 p-3 sm:p-4 rounded-lg  max-w-[80vw] sm:max-w-xs">
                 <p>{feature?.feature1}</p>
               </div>
 
               {/* Feature 2 */}
-              <div className="absolute top-10 right-4 sm:right-0 text-white bg-purple-700 bg-opacity-70 p-3 sm:p-4 rounded-lg max-w-xs max-w-[80vw] sm:max-w-xs">
+              <div className="absolute top-10 right-4 sm:right-0 text-white bg-purple-700 bg-opacity-70 p-3 sm:p-4 rounded-lg  max-w-[80vw] sm:max-w-xs">
                 <p>{feature?.feature2}</p>
               </div>
 
               {/* Feature 3 */}
-              <div className="absolute bottom-0 left-10 sm:left-40 transform -translate-x-1/2 text-white bg-indigo-600 bg-opacity-70 p-3 sm:p-4 rounded-lg max-w-xs max-w-[80vw] sm:max-w-xs">
+              <div className="absolute bottom-0 left-10 sm:left-40 transform -translate-x-1/2 text-white bg-indigo-600 bg-opacity-70 p-3 sm:p-4 rounded-lg  max-w-[80vw] sm:max-w-xs">
                 <p>{feature?.feature3}</p>
               </div>
             </div>
