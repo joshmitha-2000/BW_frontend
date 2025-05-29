@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function ProductCarousel() {
   const [products, setProducts] = useState([]);
@@ -42,14 +42,16 @@ export default function ProductCarousel() {
   return (
     <div className="w-full py-14 px-4">
       <div className="w-full flex items-center justify-center gap-6">
-
+        
         {/* Left product */}
         <div className={`w-1/5 transition duration-300 h-auto ${productBoxStyle}`}>
-          <img
-            src={products[getIndex(-1)].imageUrl}
-            alt={products[getIndex(-1)].name}
-            className="w-full h-52 object-cover"
-          />
+          <Link to={`/products/${products[getIndex(-1)].id}`}>
+            <img
+              src={products[getIndex(-1)].imageUrl}
+              alt={products[getIndex(-1)].name}
+              className="w-full h-52 object-cover"
+            />
+          </Link>
           <div className="p-3 flex flex-col items-center">
             <h3 className="font-semibold text-center">{products[getIndex(-1)].name}</h3>
             <p className="text-sm text-gray-600 text-center line-clamp-2">
@@ -75,11 +77,13 @@ export default function ProductCarousel() {
 
         {/* Center product */}
         <div className={`w-1/3 transition duration-300 h-[500px] ${productBoxStyle}`}>
-          <img
-            src={products[getIndex(0)].imageUrl}
-            alt={products[getIndex(0)].name}
-            className="w-full h-[300px] object-cover"
-          />
+          <Link to={`/products/${products[getIndex(0)].id}`}>
+            <img
+              src={products[getIndex(0)].imageUrl}
+              alt={products[getIndex(0)].name}
+              className="w-full h-[300px] object-cover"
+            />
+          </Link>
           <div className="p-4 flex flex-col items-center">
             <h2 className="text-xl font-bold text-center">{products[getIndex(0)].name}</h2>
             <p className="text-gray-700 text-center mt-2 line-clamp-3">
@@ -105,11 +109,13 @@ export default function ProductCarousel() {
 
         {/* Right product */}
         <div className={`w-1/5 transition duration-300 h-auto ${productBoxStyle}`}>
-          <img
-            src={products[getIndex(1)].imageUrl}
-            alt={products[getIndex(1)].name}
-            className="w-full h-52 object-cover"
-          />
+          <Link to={`/products/${products[getIndex(1)].id}`}>
+            <img
+              src={products[getIndex(1)].imageUrl}
+              alt={products[getIndex(1)].name}
+              className="w-full h-52 object-cover"
+            />
+          </Link>
           <div className="p-3 flex flex-col items-center">
             <h3 className="font-semibold text-center">{products[getIndex(1)].name}</h3>
             <p className="text-sm text-gray-600 text-center line-clamp-2">
