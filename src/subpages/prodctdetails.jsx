@@ -133,6 +133,19 @@ const ProductDetailsPage = () => {
         </section>
 
         {/* Video */}
+        <section className="text-center my-10 px-4">
+  <h1 className="text-2xl sm:text-4xl text-center font-semibold text-[#510059]">
+    {{
+      1: "Charging Ahead with Zero Emissions",
+      2: "Power up with the GLX E-Loader",
+      3: "Charging Ahead with Zero Emissions",
+      4: "Charging Ahead with Zero Emissions",
+      5: "OX-1 Your Ultimate Material Handling Solution"
+    }[Number(id)] || "Explore Our Innovative Vehicles"}
+  </h1>
+</section>
+
+
         <video
           src={product.videoUrl}
           autoPlay
