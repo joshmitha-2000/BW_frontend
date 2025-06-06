@@ -60,49 +60,49 @@ export default function Home() {
       </section>
 
       <ProductCarousel />
+      <section className="px-6 py-12 sm:px-10 bg-gray-100 rounded-lg shadow-inner">
+  <h3 className="text-lg sm:text-xl md:text-3xl font-semibold text-center uppercase tracking-widest text-[#56035e] mb-2 ">
+    Why Choose Bullwork Mobility
+  </h3>
+  <p className="text-black text-sm text-center font-light mb-8">
+    Designed in Bharath, Made for the World
+  </p>
 
-      {/* Why Choose */}
-      <section className="px-4 sm:px-8 mt-10">
-        <h3 className="text-lg sm:text-xl md:text-3xl font-semibold text-center uppercase tracking-widest">
-          Why Choose Bullwork Mobility
-        </h3>
-        <p className="text-black text-sm text-center font-light mb-6">
-          Designed in Bharath, Made for the World
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {[
-            {
-              img: "https://www.bullworkmobility.com/why_BM/icon1.webp",
-              title: "Lowest Operational Cost",
-              desc: "Electric Tractors save up to 80% on diesel expenses with our innovative solution",
-            },
-            {
-              img: "https://www.bullworkmobility.com/why_BM/icon2.webp",
-              title: "Next-gen Technology",
-              desc: "Autonomous and drive-by-wire system Smart, data driven and connected",
-            },
-            {
-              img: "https://www.bullworkmobility.com/why_BM/icon3.webp",
-              title: "Automation",
-              desc: "Automating repetitive skilled tasks to enhance productivity",
-            },
-            {
-              img: "https://www.bullworkmobility.com/why_BM/icon4.webp",
-              title: "Save Environment",
-              desc: "Reduces up to 10 tons of CO2 annually per machine",
-            },
-          ].map(({ img, title, desc }) => (
-            <div
-              key={title}
-              className="bg-white p-4 rounded-lg shadow hover:shadow-lg hover:scale-105 transition-transform duration-300 flex flex-col items-center text-center"
-            >
-              <img src={img} alt={title} className="w-16 h-16 mb-3 object-contain" />
-              <h2 className="text-[#56035e] text-base font-semibold mb-2 tracking-wider">{title}</h2>
-              <p className="text-gray-800 text-sm">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
+    {[
+      {
+        img: "https://www.bullworkmobility.com/why_BM/icon1.webp",
+        title: "Lowest Operational Cost",
+        desc: "Electric Tractors save up to 80% on diesel expenses with our innovative solution",
+      },
+      {
+        img: "https://www.bullworkmobility.com/why_BM/icon2.webp",
+        title: "Next-gen Technology",
+        desc: "Autonomous and drive-by-wire system Smart, data driven and connected",
+      },
+      {
+        img: "https://www.bullworkmobility.com/why_BM/icon3.webp",
+        title: "Automation",
+        desc: "Automating repetitive skilled tasks to enhance productivity",
+      },
+      {
+        img: "https://www.bullworkmobility.com/why_BM/icon4.webp",
+        title: "Save Environment",
+        desc: "Reduces up to 10 tons of CO2 annually per machine",
+      },
+    ].map(({ img, title, desc }) => (
+      <div
+        key={title}
+        className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col items-center text-center"
+      >
+        <img src={img} alt={title} className="w-16 h-16 mb-4 object-contain" />
+        <h2 className="text-[#56035e] text-base font-semibold mb-2 tracking-wider">{title}</h2>
+        <p className="text-gray-700 text-sm">{desc}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
 
       <IntroductionBhai />
 
@@ -176,7 +176,7 @@ export default function Home() {
       <Jointhebullwork />
 
       {/* Contact */}
-      <section className="mt-10">
+      <section >
         <ContactPage />
       </section>
     </>
