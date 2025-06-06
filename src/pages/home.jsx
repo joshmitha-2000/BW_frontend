@@ -93,7 +93,7 @@ export default function Home() {
     ].map(({ img, title, desc }) => (
       <div
         key={title}
-        className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col items-center text-center"
+        className=" p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col items-center text-center"
       >
         <img src={img} alt={title} className="w-16 h-16 mb-4 object-contain" />
         <h2 className="text-[#56035e] text-base font-semibold mb-2 tracking-wider">{title}</h2>
